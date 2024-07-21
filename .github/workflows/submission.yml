@@ -1,4 +1,4 @@
-name: Run submission script
+name: Run Grading Script
 
 on:
   workflow_dispatch:
@@ -12,29 +12,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Set up Java
-      uses: actions/setup-java@v1
-      with:
-        java-version: '17'
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.12'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
-    - name: Run Bash grading script
-      run: |
-        chmod +x ./submission.sh
-        if [ "${{ github.event.inputs.directory }}" == "__all" ]; then
-          for dir in practice*; do
-            if [ -d "$dir" ]; then
-              echo "Grading directory $dir"
-              ./submission.sh $dir
-            fi
-          done
-        else
-          ./submission.sh ${{ github.event.inputs.directory }}
-        fi
+      - name: Prepare grading script
+        run: chmod +x ./submission.sh
+
+      - name: Run grading script
+        id: grading
+        run: |
+          result_file=$(mktemp)
+          if [ "${{ github.event.inputs.directory }}" == "__all" ]; then
+            for dir in practice*; do
+              if [ -d "$dir" ]; then
+                echo "Grading directory $dir"
+                output=$(./submission.sh $dir)
+                echo "### Grading results for $dir" >> "$result_file"
+                echo "" >> "$result_file"
+                echo "$output" >> "$result_file"
+                echo "" >> "$result_file"
+                echo "------" >> "$result_file"
+                echo "" >> "$result_file"
+              fi
+            done
+          else
+            ./submission.sh ${{ github.event.inputs.directory }} > "$result_file"
+          fi
+          cat "$result_file" >> $GITHUB_STEP_SUMMARY
+
+      - name: Annotate results
+        run: |
+          echo "Grading Results:"
+          cat $GITHUB_STEP_SUMMARY

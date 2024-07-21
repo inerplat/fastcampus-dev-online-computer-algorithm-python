@@ -31,6 +31,8 @@ num_cases=$(ls $input_dir/input_*.txt | wc -l)
 total_cases=0
 passed_cases=0
 
+table_output="| Test Case | Result | Time (ms) |\n|-----------|--------|-----------|"
+
 for i in $(seq 1 $num_cases); do
     input_file="$input_dir/input_$i.txt"
     expected_output_file="$output_dir/output_$i.txt"
@@ -54,21 +56,17 @@ for i in $(seq 1 $num_cases); do
     done
 
     if [ "$matched" = true ]; then
-        echo "Test case $i : Passed (Time: ${elapsed_time}ms)"
+        result="Passed"
         passed_cases=$((passed_cases+1))
     else
-        echo "Test case $i : Failed (Time: ${elapsed_time}ms)"
-        echo "Expected Output:"
-        for line in "${expected_output_lines[@]}"; do
-            echo "$line"
-        done
-        echo "Actual Output:"
-        for line in "${actual_output_lines[@]}"; do
-            echo "$line"
-        done
+        result="Failed"
     fi
 
+    table_output+="\n| $i | $result | $elapsed_time |"
     total_cases=$((total_cases+1))
 done
 
-echo "Passed $passed_cases out of $total_cases test cases for $package_name."
+echo "#### Passed $passed_cases/$total_cases test cases for $package_name."
+echo ""
+echo -e "$table_output"
+echo ""
