@@ -40,8 +40,8 @@ for i in $(seq 1 $num_cases); do
     end_time=$(date +%s%3N)
     elapsed=$((end_time - start_time))
 
-    actual_output_lines=($(echo "$actual_output" | xargs -L 1))
-    expected_output_lines=($(cat $expected_output_file | xargs -L 1))
+    actual_output_lines=($(echo "$actual_output" | xargs -0 -L 1))
+    expected_output_lines=($(cat $expected_output_file | xargs -0 -L 1))
 
     if [ $elapsed -gt 2000 ]; then
         echo "Test case $i : Failed (Timeout) - Time taken: ${elapsed}ms"
