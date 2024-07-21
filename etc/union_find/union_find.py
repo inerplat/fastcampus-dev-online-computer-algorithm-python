@@ -17,3 +17,4 @@ def union(parent, a, b):
 
 
 if __name__ == "__main__":
+    pass
