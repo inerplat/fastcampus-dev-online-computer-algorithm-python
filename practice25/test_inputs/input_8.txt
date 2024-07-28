@@ -1,0 +1,11 @@
+10
+ADD cat
+ADD caterpillar
+ADD category
+SEARCH cat
+REMOVE category
+SEARCH cat
+ADD cathedral
+SEARCH cate
+REMOVE cat
+SEARCH cat

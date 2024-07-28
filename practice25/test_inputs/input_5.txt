@@ -1,0 +1,11 @@
+10
+ADD grape
+ADD grapefruit
+ADD graph
+SEARCH gra
+REMOVE graph
+SEARCH gra
+ADD gravity
+SEARCH gra
+REMOVE grapefruit
+SEARCH gra

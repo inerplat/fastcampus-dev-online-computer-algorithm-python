@@ -1,0 +1,11 @@
+10
+ADD car
+ADD cart
+ADD carpet
+SEARCH car
+REMOVE cart
+SEARCH car
+ADD carrot
+SEARCH car
+REMOVE car
+SEARCH car

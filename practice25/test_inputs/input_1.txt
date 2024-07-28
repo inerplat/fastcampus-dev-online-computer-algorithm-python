@@ -1,0 +1,10 @@
+9
+ADD app
+ADD apps
+ADD apple
+ADD appstore
+SEARCH app
+REMOVE appstore
+SEARCH app
+REMOVE app
+SEARCH app

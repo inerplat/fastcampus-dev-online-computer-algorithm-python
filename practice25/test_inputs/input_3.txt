@@ -1,0 +1,11 @@
+10
+ADD banana
+ADD band
+ADD bandana
+SEARCH ban
+REMOVE banana
+SEARCH ban
+ADD bandit
+SEARCH ban
+REMOVE band
+SEARCH ban

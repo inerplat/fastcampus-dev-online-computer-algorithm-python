@@ -1,0 +1,10 @@
+9
+ADD mango
+ADD mangosteen
+SEARCH mango
+REMOVE mangosteen
+SEARCH mango
+ADD mangrove
+SEARCH mango
+REMOVE mango
+SEARCH mango

@@ -1,0 +1,11 @@
+10
+ADD moon
+ADD moose
+ADD moonlight
+SEARCH moon
+REMOVE moose
+SEARCH moon
+ADD moonwalk
+SEARCH moon
+REMOVE moon
+SEARCH moon

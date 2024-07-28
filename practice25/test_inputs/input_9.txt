@@ -1,0 +1,11 @@
+10
+ADD sun
+ADD sunflower
+ADD sunrise
+SEARCH sun
+REMOVE sunrise
+SEARCH sun
+ADD sunset
+SEARCH sun
+REMOVE sun
+SEARCH sun

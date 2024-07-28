@@ -1,0 +1,10 @@
+9
+ADD orange
+ADD orchard
+SEARCH or
+REMOVE orange
+SEARCH or
+ADD orchestra
+SEARCH orc
+REMOVE orchard
+SEARCH or
