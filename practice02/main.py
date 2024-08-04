@@ -2,14 +2,14 @@ cache = [0] * 1001
 
 
 def hanoi(n):
-    # memoization
     if cache[n] != 0:
         return cache[n]
+
     # base case
-    if n == 0:
-        return 0
     if n == 1:
         return 1
+    if n == 0:
+        return 0
 
     # recursive case
     cache[n] = 2 * hanoi(n - 1) + 1
@@ -19,4 +19,5 @@ def hanoi(n):
 if __name__ == "__main__":
     n = int(input())
     k = int(input())
-    print(hanoi(n) - hanoi(k) + hanoi(k - 1))
+    answer = hanoi(n) - hanoi(k) + hanoi(k - 1)
+    print(answer)

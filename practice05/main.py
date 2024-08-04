@@ -1,6 +1,3 @@
-import sys
-
-
 def radix_sort(arr, n):
     max_num = max(arr)
     exp = 1
@@ -10,18 +7,19 @@ def radix_sort(arr, n):
         for i in range(n):
             digit = (arr[i] // exp) % 10
             bucket[digit].append(arr[i])
-
         index = 0
         for i in range(10):
             for j in range(len(bucket[i])):
                 arr[index] = bucket[i][j]
                 index += 1
             bucket[i].clear()
-
         exp *= 10
 
+import sys
 
 if __name__ == "__main__":
+    # n = int(input())
+    # arr = list(map(int, input().split()))
     input = sys.stdin.read
     data = input().split()
     n = int(data[0])

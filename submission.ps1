@@ -45,7 +45,7 @@ for ($i = 1; $i -le $num_cases; $i++) {
     $expected_output_lines = Get-Content $expected_output_file | ForEach-Object { $_.Trim() }
 
     if ($elapsed_time -gt 2) {
-        Write-Host "Test case $i : Failed (Timeout) (Time: $elapsed_time s)"
+        Write-Host "Test case $i : Failed (Timeout) (Time: $elapsed_time z)"
     } else {
         $matched = $true
         for ($j = 0; $j -lt [math]::Max($actual_output_lines.Count, $expected_output_lines.Count); $j++) {
@@ -56,10 +56,10 @@ for ($i = 1; $i -le $num_cases; $i++) {
         }
 
         if ($matched) {
-            Write-Host "Test case $i : Passed (Time: $elapsed_time s)"
+            Write-Host "Test case $i : Passed (Time: $elapsed_time z)"
             $passed_cases++
         } else {
-            Write-Host "Test case $i : Failed (Time: $elapsed_time s)"
+            Write-Host "Test case $i : Failed (Time: $elapsed_time z)"
             Write-Host "Expected Output:"
             $expected_output_lines | ForEach-Object { Write-Host $_ }
             Write-Host "Actual Output:"

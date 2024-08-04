@@ -8,36 +8,46 @@ class Student:
             return self.height < other.height
         return self.age < other.age
 
-    def __le__(self, other):
-        return self < other or self == other
 
+class MinHeap:
+    def __init__(self, data):
+        self.data = [None] + data
+        self.size = len(data)
+        for i in range(self.size // 2, 0, -1):
+            self.make_heap(i)
 
+    def make_heap(self, i):
+        left = 2 * i
+        right = 2 * i + 1
+        target = i
+        if left <= self.size and self.data[left] < self.data[target]:
+            target = left
+        if right <= self.size and self.data[right] < self.data[target]:
+            target = right
+        if target != i:
+            self.swap(i, target)
+            self.make_heap(target)
 
-def quick(arr, start, end):
-    if start >= end:
-        return
-    pivot = arr[start]
-    left = start + 1
-    right = end
-    while left <= right:
-        while left <= end and arr[left] <= pivot:
-            left += 1
-        while right > start and arr[right] > pivot:
-            right -= 1
-        if left < right:
-            arr[left], arr[right] = arr[right], arr[left]
-    arr[start], arr[right] = arr[right], arr[start]
+    def swap(self, i, target):
+        self.data[i], self.data[target] = self.data[target], self.data[i]
 
-    quick(arr, start, right - 1)
-    quick(arr, right + 1, end)
+    def delete(self):
+        root = self.data[1]
+        self.swap(1, self.size)
+        self.size -= 1
+        self.make_heap(1)
+        return root
+
 
 if __name__ == "__main__":
     n = int(input())
     students = []
+
     for _ in range(n):
         age, height = map(int, input().split())
         students.append(Student(age, height))
 
-    quick(students, 0, n - 1)
-    for student in students:
+    min_heap = MinHeap(students)
+    for _ in range(n):
+        student = min_heap.delete()
         print(student.age, student.height)

@@ -5,11 +5,13 @@ if __name__ == "__main__":
     graph = [[] for _ in range(v + 1)]
     inDegree = [0] * (v + 1)
     for _ in range(e):
-        a, b = map(int, input().split())
-        graph[a].append(b)
-        inDegree[b] += 1
-    result = []
+        src, dest = map(int, input().split())
+        graph[src].append(dest)
+        inDegree[dest] += 1
+
     q = queue.Queue()
+    result = []
+
     for i in range(1, v + 1):
         if inDegree[i] == 0:
             q.put(i)
@@ -31,5 +33,3 @@ if __name__ == "__main__":
 
     for x in result:
         print(x, end=" ")
-
-

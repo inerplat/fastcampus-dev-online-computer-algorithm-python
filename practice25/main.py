@@ -3,6 +3,7 @@ class TrieNode:
         self.child = {}
         self.is_end = False
 
+
 class Trie:
     def __init__(self):
         self.root = TrieNode()
@@ -19,6 +20,8 @@ class Trie:
         self._delete(self.root, word, 0)
 
     def _delete(self, current, word, index):
+        # base case
+        # 문자열의 끝에 도달한 경우
         if index == len(word):
             if not current.is_end:
                 return False
@@ -29,10 +32,18 @@ class Trie:
         if node is None:
             return False
         should_delete = self._delete(node, word, index + 1)
+
         if should_delete and not node.is_end:
             del current.child[ch]
             return len(current.child) == 0
         return False
+
+    def find_all_words(self, node, prefix, results):
+        if node.is_end:
+            results.append(prefix)
+
+        for ch, next_node in node.child.items():
+            self.find_all_words(next_node, prefix + ch, results)
 
     def search_by_prefix(self, prefix):
         current = self.root
@@ -44,12 +55,6 @@ class Trie:
         self.find_all_words(current, prefix, results)
         return results
 
-    def find_all_words(self, node, prefix, results):
-        if node.is_end:
-            results.append(prefix)
-        for ch, next_node in node.child.items():
-            self.find_all_words(next_node, prefix + ch, results)
-
     def search(self, word):
         current = self.root
         for ch in word:
@@ -60,15 +65,10 @@ class Trie:
 
 
 if __name__ == "__main__":
-    trie = Trie()
-
     m = int(input().strip())
-
+    trie = Trie()
     for _ in range(m):
-        command_line = input().strip().split(maxsplit=1)
-        command = command_line[0]
-        argument = command_line[1] if len(command_line) > 1 else ""
-
+        command, argument = map(str, input().strip().split())
         if command == "ADD":
             trie.insert(argument)
         elif command == "REMOVE":

@@ -16,8 +16,8 @@ def dist(p, q):
 
 
 def brute_force(points, start, end):
-    min_dist = float('inf')
-    closest_pair = Pair(points[start], points[start])
+    min_dist = 1_000_000_0000
+    closest_pair = None
     for i in range(start, end):
         for j in range(i + 1, end + 1):
             d = dist(points[i], points[j])
@@ -34,12 +34,14 @@ def divide(points, start, end):
     mid = (start + end) // 2
     left_area = divide(points, start, mid)
     right_area = divide(points, mid + 1, end)
-
     left_dist = dist(left_area.first, left_area.second)
     right_dist = dist(right_area.first, right_area.second)
 
-    d = min(left_dist, right_dist)
-    min_pair = left_area if left_dist < right_dist else right_area
+    d = left_dist
+    min_pair = left_area
+    if left_dist >= right_dist:
+        d = right_dist
+        min_pair = right_area
 
     band = []
     for i in range(start, end + 1):
@@ -48,32 +50,24 @@ def divide(points, start, end):
             band.append(points[i])
 
     band.sort(key=lambda p: p.y)
-
     for i in range(len(band)):
         for j in range(i + 1, min(len(band), i + 4)):
             new_dist = dist(band[i], band[j])
             if new_dist < d:
                 d = new_dist
                 min_pair = Pair(band[i], band[j])
-
     return min_pair
 
 
-def main():
+if __name__ == "__main__":
     n = int(input())
     points = []
     for i in range(n):
         x, y = map(int, input().split())
         points.append(Point(x, y, i + 1))
-
     points.sort(key=lambda p: p.x)
-
-    closest = divide(points, 0, n - 1)
-    if closest.first.index < closest.second.index:
-        print(f"{closest.first.index} {closest.second.index}")
+    closest_pair = divide(points, 0, n - 1)
+    if closest_pair.first.index < closest_pair.second.index:
+        print(f"{closest_pair.first.index} {closest_pair.second.index}")
     else:
-        print(f"{closest.second.index} {closest.first.index}")
-
-
-if __name__ == "__main__":
-    main()
+        print(f"{closest_pair.second.index} {closest_pair.first.index}")

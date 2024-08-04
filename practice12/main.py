@@ -1,38 +1,51 @@
-from queue import PriorityQueue
-
-
-class Graph:
-    def __init__(self, dest, cost):
+class Edge:
+    def __init__(self, src, dest, cost):
+        self.src = src
         self.dest = dest
         self.cost = cost
 
-    def __lt__(self, other):
-        return self.cost < other.cost
+    def __lt__(self, o):
+        return self.cost < o.cost
+
+
+def init(parent, n):
+    for i in range(1, n + 1):
+        parent[i] = i
+
+
+def find(parent, x):
+    if parent[x] == x:
+        return x
+    parent[x] = find(parent, parent[x])
+    return parent[x]
+
+
+def union(parent, a, b):
+    x = find(parent, a)
+    y = find(parent, b)
+    parent[y] = x
 
 
 if __name__ == "__main__":
     n, m = map(int, input().split())
-    g = [[] for _ in range(n + 1)]
-    for i in range(m):
+    g = []
+    for _ in range(m):
         u, v, c = map(int, input().split())
-        g[u].append(Graph(v, c))
-        g[v].append(Graph(u, c))
-    chk = [False] * (n + 1)
+        g.append(Edge(u, v, c))
+    g.sort()
+
+    parent = [0] * (n + 1)
+    init(parent, n)
     ans = 0
-    pq = PriorityQueue()
-    pq.put(Graph(1, 0))
-    while not pq.empty():
-        cur = pq.get()
-        dest = cur.dest
-        cost = cur.cost
-        if not chk[dest]:
-            chk[dest] = True
-            ans += cost
-            for nxt in g[dest]:
-                pq.put(nxt)
+    for i in range(m):
+        if find(parent, g[i].src) != find(parent, g[i].dest):
+            union(parent, g[i].src, g[i].dest)
+            ans += g[i].cost
+    root = find(parent, 1)
+    import sys
 
-    if False in chk[1:]:
-        print(-1)
-
-    else:
-        print(ans)
+    for i in range(2, n + 1):
+        if root != find(parent, i):
+            print(-1)
+            sys.exit(0)
+    print(ans)

@@ -1,6 +1,9 @@
 def ccw(o, a, b):
     return (o.x * a.y + a.x * b.y + b.x * o.y) - (o.y * a.x + a.y * b.x + b.y * o.x)
 
+global base_point
+
+
 class Point:
     def __init__(self, x, y):
         self.x = x
@@ -14,7 +17,7 @@ class Point:
             return distance_self < distance_other
         return ccw_value > 0
 
-base_point = None
+
 
 
 def convex_hull(points):
@@ -26,12 +29,11 @@ def convex_hull(points):
     return lower
 
 
-def main():
+if __name__ == "__main__":
+
     n = int(input())
     points = []
-
     base_index = 0
-
     for i in range(n):
         x, y = map(int, input().split())
         points.append(Point(x, y))
@@ -39,13 +41,7 @@ def main():
             base_index = i
 
     points[0], points[base_index] = points[base_index], points[0]
-    global base_point
     base_point = points[0]
-
     points = [base_point] + sorted(points[1:])
     hull = convex_hull(points)
     print(n - len(hull))
-
-
-if __name__ == "__main__":
-    main()

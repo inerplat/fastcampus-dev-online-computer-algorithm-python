@@ -1,14 +1,3 @@
-def dfs(graph, x):
-    stack = [x]
-    chk[x] = True
-    while stack:
-        v = stack.pop()
-        for des in graph[v]:
-            if not chk[des]:
-                chk[des] = True
-                stack.append(des)
-
-
 import queue
 
 
@@ -32,6 +21,7 @@ if __name__ == "__main__":
         u, v = map(int, input().split())
         graph[u].append(v)
         graph[v].append(u)
+
     cnt = 0
     for i in range(1, n + 1):
         if not chk[i]:

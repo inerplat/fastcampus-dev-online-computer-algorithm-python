@@ -1,6 +1,6 @@
 if __name__ == "__main__":
     v, e = map(int, input().split())
-    arr = [[float('inf')] * (v + 1) for _ in range(v + 1)]
+    arr = [[1_000_000_000] * (v + 1) for _ in range(v + 1)]
 
     for _ in range(e):
         src, dest, cost = map(int, input().split())
@@ -14,7 +14,7 @@ if __name__ == "__main__":
     q = int(input())
     for _ in range(q):
         src, dest = map(int, input().split())
-        if arr[src][dest] == float('inf'):
+        if arr[src][dest] == 1_000_000_000:
             print(-1)
         else:
             print(arr[src][dest])

@@ -4,9 +4,8 @@ class Graph:
         self.cost = cost
 
 
-def main():
+if __name__ == "__main__":
     v, e = map(int, input().split())
-
     adjList = [[] for _ in range(v + 1)]
 
     for _ in range(e):
@@ -15,32 +14,25 @@ def main():
         adjList[dest].append(Graph(src, cost))
 
     q = int(input().strip())
+    result = []
 
-    results = []
     for _ in range(q):
         src, dest = map(int, input().split())
-
         if src == dest:
-            results.append(0)
+            result.append(0)
             continue
 
         found = False
-        minCost = float('inf')
-
+        minCost = 1_000_000_000
         for graph in adjList[src]:
             if graph.dest == dest:
                 found = True
                 if graph.cost < minCost:
                     minCost = graph.cost
-
         if found:
-            results.append(minCost)
+            result.append(minCost)
         else:
-            results.append(-1)
+            result.append(-1)
 
-    for result in results:
+    for result in result:
         print(result)
-
-
-if __name__ == "__main__":
-    main()
